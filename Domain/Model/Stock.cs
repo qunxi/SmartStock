@@ -120,7 +120,7 @@ namespace Domain.Model
 
         public static bool operator ==(Stock left, Stock right)
         {
-            return left != null ? left.Equals(right) : object.ReferenceEquals(null, right);
+            return object.ReferenceEquals(left, null) ? object.ReferenceEquals(null, right) : left.Equals(right);
         }
 
         public static bool operator !=(Stock left, Stock right)
