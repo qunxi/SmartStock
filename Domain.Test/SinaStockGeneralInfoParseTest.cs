@@ -15,7 +15,7 @@ namespace Domain.Model.Test
 
         public SinaStockGeneralInfoParseTest()
         {
-            const string testfile = "stockhistory_data.htm";
+            const string testfile = "stocksummary.htm";
             StreamReader readStream = new StreamReader(testfile, System.Text.Encoding.GetEncoding("GBK"));
             _htmlContent = readStream.ReadToEnd();
         }
