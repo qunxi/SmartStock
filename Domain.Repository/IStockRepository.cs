@@ -1,7 +1,7 @@
-﻿namespace Domain.Repository
-{
-    using Domain.Model;
+﻿using Domain.Model;
 
+namespace Domain.Repository
+{
     public interface IStockRepository
     {
         void SaveStock(Stock stock);

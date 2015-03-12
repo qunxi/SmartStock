@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Model;
+using Infrastructure.Domain;
+using Infrastructure.Domain.MongoDb;
 
 namespace Domain.Repository
 {
