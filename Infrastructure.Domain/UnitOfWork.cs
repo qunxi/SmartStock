@@ -51,7 +51,7 @@ namespace Infrastructure.Domain
             }
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
             using (TransactionScope scope = new TransactionScope())
             {
