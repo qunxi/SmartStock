@@ -34,22 +34,24 @@ namespace Infrastructure.Domain
 
         #endregion
 
-        public void Add(TAggregateRoot aggregateRoot)
+        public virtual void Add(TAggregateRoot aggregateRoot)
         {
             RegisterAdd(aggregateRoot);
         }
 
-        public void Update(TAggregateRoot aggregateRoot)
+        public virtual void Update(TAggregateRoot aggregateRoot)
         {
             RegisterUpdate(aggregateRoot);
         }
 
-        public void Remove(TAggregateRoot aggregateRoot)
+        public virtual void Remove(TAggregateRoot aggregateRoot)
         {
             RegisterRemoved(aggregateRoot);
         }
 
         public abstract TAggregateRoot GetByKey(Guid key);
+
+        public abstract IEnumerable<TAggregateRoot> FindAll();
 
         public abstract IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> expression);
 

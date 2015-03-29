@@ -14,6 +14,12 @@ namespace SamrtStock.Desktop
             // add type registry 
         }
 
+        protected override void ConfigureModuleCatalog()
+        {
+            // this.ModuleCatalog.AddModule();
+            base.ConfigureModuleCatalog();
+        }
+
         protected override DependencyObject CreateShell()
         {
             return new Shell { DataContext = new ShellViewModel() };

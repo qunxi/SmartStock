@@ -60,9 +60,9 @@
     <Content Include="TestData\stocksummary.htm" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Doamin.Service\Doamin.Service.csproj">
+    <ProjectReference Include="..\..\Doamin.Service\Domain.Service.csproj">
       <Project>{E272F806-C9CC-4C73-9EEE-89AF5800532C}</Project>
-      <Name>Doamin.Service</Name>
+      <Name>Domain.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Domain.Model\Domain.Model.csproj">
       <Project>{9A1DEFAC-0977-4B5C-896B-F079B2D26382}</Project>

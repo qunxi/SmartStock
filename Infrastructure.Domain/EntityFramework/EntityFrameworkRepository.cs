@@ -22,6 +22,11 @@ namespace Infrastructure.Domain.EntityFramework
             return this._dbContext.Set<TAggregateRoot>().First(p => p.Id == key);
         }
 
+        public override IEnumerable<TAggregateRoot> FindAll()
+        {
+            return this._dbContext.Set<TAggregateRoot>();
+        }
+
         public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> expression)
         {
             return this._dbContext.Set<TAggregateRoot>().Where(expression);

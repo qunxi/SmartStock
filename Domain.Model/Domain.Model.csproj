@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateScope.cs" />
-    <Compile Include="StockTransactionStatus.cs" />
-    <Compile Include="Stock.cs" />
+    <Compile Include="Stocks\TransactionStatus.cs" />
+    <Compile Include="Stocks\Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

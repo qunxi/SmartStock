@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Domain.Model.Stocks;
 using Domain.Service;
+using Domain.Service.Crawl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Domain.Model.Test
@@ -22,7 +24,7 @@ namespace Domain.Model.Test
         [TestMethod]
         public void Test_GetStocksGerneralInfo_3Items()
         {
-            IEnumerable<Stock> actualStocks = SinaStockGeneralInfoParse.GetStocksGerneralInfo(this._htmlContent);
+            IEnumerable<Stock> actualStocks = StocksListParseHelper.GetStocksList(this._htmlContent);
 
             List<Stock> expectStocks = new List<Stock>
             {
