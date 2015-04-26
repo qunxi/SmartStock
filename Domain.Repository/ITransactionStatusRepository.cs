@@ -6,6 +6,6 @@ namespace Domain.Repository
     {
         string CollectionName { get; set; }
 
-        void AddTransactionStatus(TransactionStatus transStatus);
+        void Add(TransactionStatus transStatus);
     }
 }

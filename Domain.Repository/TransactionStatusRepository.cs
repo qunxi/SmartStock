@@ -19,9 +19,9 @@ namespace Domain.Repository
 
         public string CollectionName { get; set; }
 
-        public void AddTransactionStatus(TransactionStatus transStatus)
+        public override void Add(TransactionStatus transStatus)
         {
-            this.Add(transStatus);
+            base.Add(transStatus);
         }
     }
 }

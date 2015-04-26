@@ -63,6 +63,28 @@ namespace Domain.Model.Test
             Assert.IsTrue(IsEqualOfQuarters(dataScope.GetQuarters(), quarters));
         }
 
+        [TestMethod]
+        public void Test_GetQuarters_CrossMultiYears2()
+        {
+            DateTime start = new DateTime(2014, 3, 5);
+            DateTime end = new DateTime(2012, 2, 20);
+            DateScope dataScope = new DateScope(start, end);
+            List<KeyValuePair<int, Quarter>> quarters = new List<KeyValuePair<int, Quarter>>
+            {
+                new KeyValuePair<int, Quarter>(2012, Quarter.Q1),
+                new KeyValuePair<int, Quarter>(2012, Quarter.Q2),
+                new KeyValuePair<int, Quarter>(2012, Quarter.Q3),
+                new KeyValuePair<int, Quarter>(2012, Quarter.Q4),
+                new KeyValuePair<int, Quarter>(2013, Quarter.Q1),
+                new KeyValuePair<int, Quarter>(2013, Quarter.Q2),
+                new KeyValuePair<int, Quarter>(2013, Quarter.Q3),
+                new KeyValuePair<int, Quarter>(2013, Quarter.Q4),
+                new KeyValuePair<int, Quarter>(2014, Quarter.Q1)
+            };
+            Assert.IsTrue(IsEqualOfQuarters(dataScope.GetQuarters(), quarters));
+        }
+
+
         private static bool IsEqualOfQuarters(
            IEnumerable<KeyValuePair<int, Quarter>> actural,
            IEnumerable<KeyValuePair<int, Quarter>> expectation)

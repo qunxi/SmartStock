@@ -15,8 +15,16 @@ namespace Domain.Model
     {
         public DateScope(DateTime start, DateTime end)
         {
-            this.Start = start;
-            this.End = end;
+            if (start > end)
+            {
+                this.End = start;
+                this.Start = end;
+            }
+            else
+            {
+                this.Start = start;
+                this.End = end;
+            }
         }
 
         public DateTime Start { get; set; }
@@ -28,17 +36,21 @@ namespace Domain.Model
         public IEnumerable<KeyValuePair<int, Quarter>> GetQuarters()
         {
             List<KeyValuePair<int, Quarter>> quaterSpan = new List<KeyValuePair<int, Quarter>>();
+            
             Quarter startQ = GetQuarter(this.Start);
             Quarter endQ = GetQuarter(this.End);
-            for (int startY = Start.Year; startY <= End.Year; startY++)
-            {
-                int to = startQ <= endQ ? (int)endQ : (int)endQ + 4;
-                for (int from = (int)startQ; from <= to; from++)
-                {
-                    quaterSpan.Add(new KeyValuePair<int, Quarter>(startY, (Quarter)(from % 4)));
-                }
-            }
 
+            int startYear = Start.Year;
+            int endYear = End.Year;
+
+            int totalQ = startQ <= endQ ? (int)endQ : (int)endQ + 4 * (endYear - startYear);
+
+            for (int q = (int)startQ; q <= totalQ; q++)
+            {
+                Quarter value = q % 4 == 0 ? Quarter.Q4 : (Quarter)(q % 4);
+                quaterSpan.Add(new KeyValuePair<int, Quarter>(startYear + q / 5, value));
+            }
+            
             return quaterSpan;
         } 
 

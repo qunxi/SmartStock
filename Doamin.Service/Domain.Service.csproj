@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crawl\StoreStocksService.cs" />
+    <Compile Include="Crawl\IStockPersistService.cs" />
+    <Compile Include="Crawl\StockPersistService.cs" />
+    <Compile Include="Maintain\IMaintainService.cs" />
+    <Compile Include="Maintain\MaintainService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Crawl\StocksListParseHelper.cs" />
     <Compile Include="Crawl\StockTransStatusParseHelper.cs" />
-    <Compile Include="Crawl\CrawlStockService.cs" />
-    <Compile Include="Crawl\ICrawlStockService.cs" />
+    <Compile Include="Crawl\StockCrawlService.cs" />
+    <Compile Include="Crawl\IStockCrawlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain.Model\Domain.Model.csproj">
@@ -64,7 +67,9 @@
       <Name>Infrastructure.Utility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

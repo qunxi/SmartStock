@@ -4,7 +4,7 @@ using Domain.Model.Stocks;
 
 namespace Domain.Service.Crawl
 {
-    public interface ICrawlStockService
+    public interface IStockCrawlService
     {
         IEnumerable<Stock> GetAllStocksList();
         Stock GetStockTransStatusByDate(Stock stock, DateScope dateScope);
