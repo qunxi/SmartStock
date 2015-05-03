@@ -6,11 +6,11 @@ namespace Domain.Service.Crawl
 {
     public static class StocksListParseHelper
     {
-        private const string Pattern = @"<li><a[^>]*>(?<name>\w*?)\((?<code>[6|3|0]\d+?)\)</a></li>";
-
         public static IEnumerable<Stock> GetStocksList(string htmlContent)
         {
-            var matches = Regex.Matches(htmlContent, Pattern);
+            const string pattern = @"<li><a[^>]*>(?<name>[\w\*]*?)\((?<code>[6|3|0]0\d+?)\)</a></li>";
+
+            var matches = Regex.Matches(htmlContent, pattern);
             List<Stock> stocks = new List<Stock>();
 
             for (int i = 0; i < matches.Count; i++)
@@ -20,6 +20,28 @@ namespace Domain.Service.Crawl
             }
 
             return stocks;
+        }
+
+        public static Stock GetStockGeneralInfo(Stock stock, string htmlContent)
+        {
+            
+        }
+
+        public static Dictionary<string, string> GetStocksShortcut(string htmlContent)
+        {
+           const string pattern =
+                @"<td><a[^>]+?>(?<code>\d+?)</a></td><td><a[^>]+?>(?<name>[\w\W]+?)</a></td><td><a[^>]+?>(?<full>[\w\W]+?)</a></td><td>(?<short>[A-Za-z]+?)</td>\W*</tr>";
+            var matches = Regex.Matches(htmlContent, pattern);
+            
+            Dictionary<string, string> shortCuts = new Dictionary<string, string>();
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                KeyValuePair<string, string> shortCut = new KeyValuePair<string, string>(matches[i].Groups["code"].Value, matches[i].Groups["short"].Value);
+                shortCuts.Add(shortCut.Key, shortCut.Value);
+            }
+
+            return shortCuts;
         }
     }
 }

@@ -20,32 +20,35 @@ namespace Domain.Model.Stocks
 
         public string Code { get; set; } // 股票代码
 
+        public Decimal Pe { get; set; } //PE
+
+        public DateTime PublishDate { get; set; } //上市时间
+
+        public Decimal TotalCapital { get; set; } //总股本
+
+        public Decimal TotalShare { get; set; } //总股份
+
+        public Decimal FloatingCapital { get; set; } //流通金额
+
+        public Decimal FloatingShare { get; set; } //流通股份
+
+        public Decimal Revenue { get; set; } //收入
+
+        public Decimal Profit { get; set; } //利润
+
+        public Decimal RevenueRatio { get; set; } //收入同比增长
+
+        public Decimal ProfitRatio { get; set; } //利润同比增长
+
+
         public IEnumerable<TransactionStatus> DailyTransactionStatus { get; set; }  // 交易状态
 
-        //public void AddTransactionStatus(TransactionStatus status)
-        //{
-        //    this._dailyTransactionStatus.Add(status);
-        //}
-
+     
         #region comment
-        /*public static bool operator ==(Stock left, Stock right)
-        {
-            return object.ReferenceEquals(left, null) ? object.ReferenceEquals(null, right) : left.Equals(right);
-        }
-
-        public static bool operator !=(Stock left, Stock right)
-        {
-            return !(left == right);
-        }
-
+        
         public override int GetHashCode()
         {
-            unchecked
-            {
-                int hashCode = this.Name != null ? this.Name.GetHashCode() : 0;
-                hashCode = (hashCode * 397) ^ (this.Code != null ? this.Code.GetHashCode() : 0);
-                return hashCode;
-            }
+            return this.Code.GetHashCode() ^ this.Name.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -65,8 +68,8 @@ namespace Domain.Model.Stocks
 
         protected bool Equals(Stock other)
         {
-            return string.Equals(this.Name, other.Name) && string.Equals(this.Code, other.Code);
-        }*/
+           return string.Equals(this.Name, other.Name) && string.Equals(this.Code, other.Code);
+        }
         #endregion comment
     }
 }

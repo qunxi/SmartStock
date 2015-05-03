@@ -1,46 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 using Domain.Model.Stocks;
 using Domain.Service.Crawl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Domain.Model.Test
+namespace Domain.Service.Test
 {
     /// <summary>
     /// Summary description for SinaStockParseTest
     /// </summary>
     [TestClass]
     [DeploymentItem("stockhistory_data.htm")]
-    public class SinaStockParseTest
+    public class StockTransStatusParseHelperTest
     {
-        private readonly string _htmlContent;
+        private readonly string htmlContent;
         
-        public SinaStockParseTest()
+        public StockTransStatusParseHelperTest()
         {
             const string testfile = "stockhistory_data.htm";
             StreamReader readStream = new StreamReader(testfile, System.Text.Encoding.GetEncoding("GBK"));
-            _htmlContent = readStream.ReadToEnd();
+            htmlContent = readStream.ReadToEnd();
         }
-
-        private TestContext _testContextInstance;
 
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return _testContextInstance;
-            }
-            set
-            {
-                _testContextInstance = value;
-            }
-        }
+        public TestContext TestContext { get; set; }
 
         #region Additional test attributes
         //
@@ -67,8 +55,7 @@ namespace Domain.Model.Test
         [TestMethod]
         public void Test_GenerateStockStatus_ZXZQ()
         {
-            //SinaStockParse parser = new SinaStockParse(_htmlContent);
-            IEnumerable<TransactionStatus> actualStocks = StockTransStatusParseHelper.GenerateStockStatus(_htmlContent);
+            IEnumerable<TransactionStatus> actualStocks = StockTransStatusParseHelper.GenerateStockStatus(htmlContent);
             List<TransactionStatus> expectStocks = new List<TransactionStatus>
             {
                 new TransactionStatus("中信证券", "600030",
@@ -87,7 +74,7 @@ namespace Domain.Model.Test
                     new DateTime(2014, 6, 26)),
             };
 
-            bool isEqual = !expectStocks.Where((t, i) => actualStocks.ElementAt(i) != t).Any();
+            bool isEqual = !expectStocks.Where((t, i) => !actualStocks.ElementAt(i).Equals(t)).Any();
             Assert.IsTrue(isEqual);
         }
     }

@@ -8,19 +8,6 @@ namespace Domain.Service.Crawl
 {
     public static class StockTransStatusParseHelper
     {
-        /*public static Stock GenerateStock(string htmlContent)
-        {
-            string historyContent = GetHistoryTable(htmlContent);
-            KeyValuePair<string, string> codeName = GetStockCodeName(historyContent);
-            string stockName = codeName.Value;
-            string stockCode = codeName.Key;
-
-            Stock stock = new Stock(stockName, stockCode);
-            stock.DailyTransactionStatus = GenerateStockStatus(stockName, stockCode, historyContent);
-
-            return stock;
-        }*/
-
         public static IEnumerable<TransactionStatus> GenerateStockStatus(string htmlContent)
         {
             const string statusPattern = @"<div align=""center"">\W*(?<value>[\d\.-]+?)\W*</div>|<a[^>]*href=[""|'](?<link>.*)['|""]>\W*(?<value>[\d-]+?)\W*</a>";
@@ -54,6 +41,7 @@ namespace Domain.Service.Crawl
             return stockStatus;
         }
 
+        #region private
         private static string GetHistoryTable(string htmlContent)
         {
             return Regex.Match(htmlContent, @"<table.*FundHoldSharesTable[^>]*>[\w\W]+</table>").Value;
@@ -66,5 +54,6 @@ namespace Domain.Service.Crawl
             return match.Groups.Count == 3 ? new KeyValuePair<string, string>(match.Groups["code"].Value, match.Groups["name"].Value.Trim()) 
                                            : new KeyValuePair<string, string>();
         }
+        #endregion
     }
 }

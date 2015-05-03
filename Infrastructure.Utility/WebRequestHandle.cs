@@ -1,24 +1,82 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
+using Infrastructure.Utility;
+using Infrastructure.Utility.Logging;
 
 namespace infrastructure.Utility
 {
-    public abstract class WebRequestHandle
+    public class WebRequestHandle : IWebRequestHandle
     {
-        protected string GetHttpWebRequest(string address)
+        private readonly ILogger logger;
+
+        public WebRequestHandle(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
+        public string GetHttpWebRequestNoWebException(string address, Encoding encoding)
+        {
+            string htmlContent = string.Empty;
+
+            while (true)
+            {
+                try
+                {
+                    Uri uri = new Uri(address);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+                    request.Proxy = null; // to speed up to access the website
+                    request.Timeout = 30 * 1000;
+                    request.ReadWriteTimeout = 30 * 1000;
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        Stream recvStream = response.GetResponseStream(); //use bufferedStream also to seed up
+                        if (recvStream == null)
+                            return htmlContent;
+
+                        using (BufferedStream buffer = new BufferedStream(recvStream))
+                        {
+                            using (StreamReader reader = new StreamReader(buffer, encoding))
+                            {
+                                htmlContent = reader.ReadToEnd();
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    this.logger.Error(string.Format("HttpWebRequest throw an Exception: {0}, address is{1}", e.Message, address));
+                }
+            }
+           
+            return htmlContent;
+        }
+
+        public string GetHttpWebRequest(string address, Encoding encoding)
         {
             Uri uri = new Uri(address);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream recvStream = response.GetResponseStream();
+            request.Proxy = null; // to speed up to access the website
+            request.Timeout = 30*1000;
+            request.ReadWriteTimeout = 30*1000;
             string htmlContent = string.Empty;
-            if (recvStream != null)
+            using(HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
-                StreamReader readStream = new StreamReader(recvStream, System.Text.Encoding.GetEncoding("GBK"));
-                htmlContent = readStream.ReadToEnd();
-            }
+                Stream recvStream = response.GetResponseStream(); //use bufferedStream also to seed up
+                if (recvStream == null) 
+                    return htmlContent;
 
+                using (BufferedStream buffer = new BufferedStream(recvStream))
+                {
+                    using (StreamReader reader = new StreamReader(buffer, encoding))
+                    {
+                        htmlContent = reader.ReadToEnd();
+                    }
+                }
+            }
+           
             return htmlContent;
         }
     }

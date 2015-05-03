@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IStockRepository.cs" />
     <Compile Include="ITransactionStatusRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockRepository.cs" />
     <Compile Include="TransactionStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>

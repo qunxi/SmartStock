@@ -1,11 +1,14 @@
-﻿using Domain.Model.Stocks;
+﻿using System;
+using Domain.Model.Stocks;
 
 namespace Domain.Repository
 {
     public interface ITransactionStatusRepository
     {
-        string CollectionName { get; set; }
+        // string CollectionName { get; }
 
-        void Add(TransactionStatus transStatus);
+        void AddStockTransactionStatus(Stock stock);
+
+        DateTime GetLatestUpdatedInDb(Stock stock, DateTime startDate);
     }
 }

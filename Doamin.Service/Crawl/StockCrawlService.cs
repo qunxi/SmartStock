@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Text;
 using Domain.Model;
 using Domain.Model.Stocks;
 using infrastructure.Utility;
@@ -12,9 +11,10 @@ namespace Domain.Service.Crawl
 {
     public class StockCrawlService : WebRequestHandle, IStockCrawlService
     {
-        private ILogger logger;
+        private readonly ILogger logger;
         
         public StockCrawlService(ILogger logger)
+            : base(logger)
         {
             this.logger = logger;
         }
@@ -25,26 +25,39 @@ namespace Domain.Service.Crawl
 
             List<Stock> stocks = new List<Stock>();
 
-            string htmlContent = GetHttpWebRequest(stockListUrl);
+            string htmlContent = GetHttpWebRequest(stockListUrl, Encoding.GetEncoding("GBK"));
+            
             stocks.AddRange(StocksListParseHelper.GetStocksList(htmlContent));
 
             return stocks;
         }
-        
-        public Stock GetStockTransStatusByDate(Stock stock, DateScope dateScope)
+
+        public Stock GetStockTransStatusByUrls(Stock stock, IEnumerable<string> urls)
         {
-            IEnumerable<string> urls = this.GenerateStockUrls(stock.Code, dateScope);
             List<TransactionStatus> stockStatus = new List<TransactionStatus>();
 
             foreach (var url in urls)
             {
                 IEnumerable<TransactionStatus> newStatuses = this.GetTransactionStatusByUrl(url);
+
                 if (newStatuses == null)
+                {
                     continue;
+                }
+
                 stockStatus.AddRange(newStatuses);
             }
 
             stock.DailyTransactionStatus = stockStatus;
+
+            return stock;
+        }
+
+        public Stock GetStockTransStatusByDate(Stock stock, DateScope dateScope)
+        {
+            IEnumerable<string> urls = this.GenerateStockUrls(stock.Code, dateScope);
+  
+            stock.DailyTransactionStatus =  GetStockTransStatusByUrls(stock, urls).DailyTransactionStatus.Where(m => m.Date >= dateScope.Start);
 
             return stock;
         }
@@ -54,20 +67,15 @@ namespace Domain.Service.Crawl
         {
             try
             {
-                string htmlContent = base.GetHttpWebRequest(url);
+                string htmlContent = this.GetHttpWebRequestNoWebException(url, Encoding.GetEncoding("GBK"));
 
-                if (string.IsNullOrEmpty(htmlContent))
-                {
-                    return null;
-                }
-                return StockTransStatusParseHelper.GenerateStockStatus(htmlContent);
+                return string.IsNullOrEmpty(htmlContent) ? null : StockTransStatusParseHelper.GenerateStockStatus(htmlContent);
             }
             catch (WebException e)
             {
-                System.Diagnostics.StackTrace st = new System.Diagnostics.StackTrace(1, true);
-                int line = st.GetFrame(0).GetFileLineNumber();
-                string file = st.GetFrame(0).GetFileName();
-                this.logger.Error(string.Format("at Line: {0} of File: {1} throw an exeception: {2}. the url is {3}", line, file, e.Message, url));
+                // I don't know how to fixed the httpWebRequest throw Timeout WebException, it always happen.
+                // Do I need use loop to request nutil not happend timeout
+                this.logger.Error(string.Format("Access the address {0} failed. Exception is {1}", url, e.Message));
             }
 
             return null;
@@ -80,6 +88,39 @@ namespace Domain.Service.Crawl
             IEnumerable<KeyValuePair<int, Quarter>> quarters = date.GetQuarters();
             return quarters.Select(quarter => string.Format(dailyLineUrl, code, quarter.Key, (int)quarter.Value)).ToList();
         }
+
+
+        //later i need add update short cut name function for stock, why not invoke the initial stock function?
+        //it takes long time to crawl web, so as an indiviual function to do things.
+        private Dictionary<string, string> GetStockShortcutList()
+        {
+            const string baseUrl = @"http://www.yz21.org/stock/info/stocklist_{0}.html";
+
+            Dictionary<string, string> shortCutsList = new Dictionary<string, string>();
+
+            for (int i = 1; i <= 139; i++)
+            {
+                string url = i == 1 ? @"http://www.yz21.org/stock/info" : string.Format(baseUrl, i);
+                try
+                {
+                    string htmlContent = this.GetHttpWebRequest(url, Encoding.UTF8);
+
+                    if(string.IsNullOrEmpty(htmlContent))
+                        continue;
+                    
+                    shortCutsList = shortCutsList.Union(StocksListParseHelper.GetStocksShortcut(htmlContent))
+                        .ToDictionary(key => key.Key, value => value.Value);
+                }
+                catch (WebException e)
+                {
+                    // I don't know how to fixed the httpWebRequest throw Timeout WebException, it always happen.
+                    // Do I need use loop to request nutil not happend timeout
+                    this.logger.Error(string.Format("Access the address {0} failed. Exception is {1}", url, e.Message));
+                } 
+            }
+            return shortCutsList;
+        }
+
         #endregion private
     }
 }

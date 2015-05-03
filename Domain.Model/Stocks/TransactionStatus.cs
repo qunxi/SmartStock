@@ -55,12 +55,11 @@ namespace Domain.Model.Stocks
         public double Turnover { get; set; } // 成交额
 
         public DateTime Date { get; set; } // 日期
-
-
+        
 
         #region comment
 
-        /*public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             if (object.ReferenceEquals(null, obj))
             {
@@ -75,41 +74,16 @@ namespace Domain.Model.Stocks
             return obj.GetType() == this.GetType() && this.Equals((TransactionStatus)obj);
         }
 
-        public static bool operator ==(TransactionStatus left, TransactionStatus right)
-        {
-            return object.ReferenceEquals(left, null) ? object.ReferenceEquals(null, right) : left.Equals(right);
-        }
-
-        public static bool operator !=(TransactionStatus left, TransactionStatus right)
-        {
-            return !(left == right);
-        }
-
         public override int GetHashCode()
         {
-            unchecked
-            {
-                int hashCode = this.Name.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Code.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.RealTime.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Open.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Close.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.High.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Low.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Volume.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Turnover.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Date.GetHashCode();
-                return hashCode;
-            }
+            return this.Name.GetHashCode() ^ this.Code.GetHashCode() ^ this.Date.GetHashCode();
         }
 
         protected bool Equals(TransactionStatus other)
         {
-            return this.Name == other.Name && this.Code == other.Code 
-                   && Math.Abs(this.RealTime - other.RealTime) < TOLERANCE && Math.Abs(this.Open - other.Open) < TOLERANCE
-                   && Math.Abs(this.Close - other.Close) < TOLERANCE && Math.Abs(this.High - other.High) < TOLERANCE && Math.Abs(this.Low - other.Low) < TOLERANCE
-                   && Math.Abs(this.Volume - other.Volume) < TOLERANCE && Math.Abs(this.Turnover - other.Turnover) < TOLERANCE && this.Date == other.Date;
-        }*/
+            return this.Name == other.Name && this.Code == other.Code && this.Date == other.Date;
+        }
+
         #endregion comment
 
     }

@@ -43,12 +43,14 @@ namespace Domain.Model
             int startYear = Start.Year;
             int endYear = End.Year;
 
-            int totalQ = startQ <= endQ ? (int)endQ : (int)endQ + 4 * (endYear - startYear);
+            //int totalQ1 = startQ <= endQ ? (int)endQ : (int)endQ + 4 * (endYear - startYear);
 
-            for (int q = (int)startQ; q <= totalQ; q++)
+            int totalQ = 4*(endYear - startYear) + (int) endQ - (int) startQ + 1;
+
+            for (int q = 0; q < totalQ; q++)
             {
-                Quarter value = q % 4 == 0 ? Quarter.Q4 : (Quarter)(q % 4);
-                quaterSpan.Add(new KeyValuePair<int, Quarter>(startYear + q / 5, value));
+                Quarter value = (q + (int)startQ) % 4 == 0 ? Quarter.Q4 : (Quarter)((q + (int)startQ) % 4);
+                quaterSpan.Add(new KeyValuePair<int, Quarter>(startYear + (q +(int)startQ  -1) / 4, value));
             }
             
             return quaterSpan;

@@ -8,7 +8,7 @@ namespace Infrastructure.Domain
     public abstract class BaseRepository<TAggregateRoot> : IRepository<TAggregateRoot>, IUnitOfWorkRepository
         where TAggregateRoot : IAggregateRoot
     {
-        private readonly IUnitOfWork _unitOfWork;
+        protected readonly IUnitOfWork _unitOfWork;
 
         protected BaseRepository(IUnitOfWork unitOfWork)
         {
@@ -50,10 +50,14 @@ namespace Infrastructure.Domain
         }
 
         public abstract TAggregateRoot GetByKey(Guid key);
+        public abstract TAggregateRoot Find(Expression<Func<TAggregateRoot, bool>> expression);
 
         public abstract IEnumerable<TAggregateRoot> FindAll();
 
         public abstract IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> expression);
+
+        public abstract IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> expression,
+            Expression<Func<TAggregateRoot, dynamic>> orderExpression, SortOrder sortOrder); 
 
         public abstract bool Exist(TAggregateRoot aggregateRoot);
 

@@ -160,6 +160,10 @@
       <Project>{E272F806-C9CC-4C73-9EEE-89AF5800532C}</Project>
       <Name>Domain.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain.Model\Domain.Model.csproj">
+      <Project>{9A1DEFAC-0977-4B5C-896B-F079B2D26382}</Project>
+      <Name>Domain.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain.Repository\Domain.Repository.csproj">
       <Project>{8E24CDF3-F7FD-47A2-9CBD-1181C574E43A}</Project>
       <Name>Domain.Repository</Name>

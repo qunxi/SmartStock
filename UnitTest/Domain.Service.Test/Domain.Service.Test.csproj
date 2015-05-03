@@ -6,8 +6,8 @@
     <ProjectGuid>{BFBE0D1F-5B89-41B8-A585-E088B6EAA008}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Application.Test</RootNamespace>
-    <AssemblyName>Application.Test</AssemblyName>
+    <RootNamespace>Domain.Service.Test</RootNamespace>
+    <AssemblyName>Domain.Service.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,13 +53,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="StoreSinaTransactionServiceTest.cs" />
+    <Compile Include="StocksListParseHelperTest.cs" />
+    <Compile Include="StockTransStatusParseHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Doamin.Service\Domain.Service.csproj">
       <Project>{E272F806-C9CC-4C73-9EEE-89AF5800532C}</Project>
       <Name>Domain.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Domain.Model\Domain.Model.csproj">
+      <Project>{9A1DEFAC-0977-4B5C-896B-F079B2D26382}</Project>
+      <Name>Domain.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Domain.Repository\Domain.Repository.csproj">
       <Project>{8e24cdf3-f7fd-47a2-9cbd-1181c574e43a}</Project>
@@ -70,6 +78,14 @@
       <Project>{84FD4897-EF64-4FF1-8A1A-219711665A15}</Project>
       <Name>Infrastructure.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\stock.html" />
+    <Content Include="TestData\stockhistory_data.htm" />
+    <Content Include="TestData\stocksummary.htm" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -91,6 +107,9 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /Y /S "$(ProjectDir)TestData\*" "$(TargetDir)"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

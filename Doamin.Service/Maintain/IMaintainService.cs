@@ -11,5 +11,8 @@ namespace Domain.Service.Maintain
         void InitialAllStocksHistory();
         void UpdateAllStocksHistory(DateTime start, DateTime end);
         void RemoveStockHistory(string stockCode);
+
+        //
+        void UpdateLoggingFileData();
     }
 }

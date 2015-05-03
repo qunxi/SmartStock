@@ -18,16 +18,6 @@ namespace Infrastructure.Domain.Model
             return entity != null && this.Id.Equals(entity.Id);
         }
 
-        public static bool operator ==(BaseEntity left, BaseEntity right)
-        {
-            return !ReferenceEquals(left, null) && left.Equals(right);
-        }
-
-        public static bool operator !=(BaseEntity left, BaseEntity right)
-        {
-            return !(left == right);
-        }
-
         public override int GetHashCode()
         {
             return this.Id.GetHashCode();

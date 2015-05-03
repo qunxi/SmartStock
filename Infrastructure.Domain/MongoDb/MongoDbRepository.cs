@@ -60,6 +60,27 @@ namespace Infrastructure.Domain.MongoDb
             return collection.AsQueryable<TAggregateRoot>().First(doc => doc.Id == key);
         }
 
+        public override TAggregateRoot Find(Expression<Func<TAggregateRoot, bool>> expression)
+        {
+            return FindAll(expression).FirstOrDefault();
+        }
+
+        public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> expression,
+                                    Expression<Func<TAggregateRoot, dynamic>> orderExpression, SortOrder sortOrder)
+        {
+            MongoCollection collection = GetMongoCollection();
+            var query = collection.AsQueryable<TAggregateRoot>().Where(expression);
+            switch (sortOrder)
+            {
+                case SortOrder.Ascending:
+                    return  query.OrderBy(orderExpression);
+                   
+                case SortOrder.Descending:
+                    return query.OrderByDescending(orderExpression);
+            }
+            return query;
+        }
+
         public override IEnumerable<TAggregateRoot> FindAll(Expression<Func<TAggregateRoot, bool>> conditionExpression)
         {
             MongoCollection collection = GetMongoCollection();

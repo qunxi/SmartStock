@@ -9,7 +9,7 @@ namespace SmartStock.Web.Controllers
 {
     public class MaintainController : Controller
     {
-        private IMaintainService maintainService;
+        private readonly IMaintainService maintainService;
 
         public MaintainController(IMaintainService maintainService)
         {
@@ -26,6 +26,12 @@ namespace SmartStock.Web.Controllers
         public void InitialAllStocksHistory()
         {
             this.maintainService.InitialAllStocksHistory(); 
+        }
+
+        [HttpPost]
+        public void UpdateLoggingData()
+        {
+            this.maintainService.UpdateLoggingFileData();
         }
 
         public void UpdateAllStocksHistory(string startDate, string endDate)

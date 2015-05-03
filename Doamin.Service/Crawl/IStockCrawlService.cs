@@ -8,5 +8,6 @@ namespace Domain.Service.Crawl
     {
         IEnumerable<Stock> GetAllStocksList();
         Stock GetStockTransStatusByDate(Stock stock, DateScope dateScope);
+        Stock GetStockTransStatusByUrls(Stock stock, IEnumerable<string> urls);
     }
 }

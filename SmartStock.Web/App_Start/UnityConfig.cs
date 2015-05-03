@@ -1,14 +1,14 @@
 using System;
-using System.EnterpriseServices;
-using System.Web.UI.WebControls;
+using Domain.Model.Stocks;
 using Domain.Repository;
 using Domain.Service.Crawl;
 using Domain.Service.Maintain;
 using Infrastructure.Domain;
 using Infrastructure.Domain.MongoDb;
+using Infrastructure.Utility;
+using infrastructure.Utility;
 using Infrastructure.Utility.Logging;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 
 namespace SmartStock.Web.App_Start
 {
@@ -43,16 +43,20 @@ namespace SmartStock.Web.App_Start
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            // TODO: Register your types here
+            // database raltive
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
-            container.RegisterType<IMongoDbContext, MongoDbContext>();
+            container.RegisterType<IMongoDbContext, MongoDbContext>(new InjectionConstructor("smartstock"));
 
             //repository
             container.RegisterType(typeof(IRepository<>), typeof(MongoDbRepository<>));
             container.RegisterType<ITransactionStatusRepository, TransactionStatusRepository>();
-            
+            container.RegisterType<IRepository<Stock>, StockRepository>();
+
             //logging
             container.RegisterType<ILogger, NLogger>();
+
+            //webRequest
+            container.RegisterType<IWebRequestHandle, WebRequestHandle>();
 
             //service part
             container.RegisterType<IStockCrawlService, StockCrawlService>();
