@@ -22,10 +22,10 @@ namespace Domain.Service.Crawl
             return stocks;
         }
 
-        public static Stock GetStockGeneralInfo(Stock stock, string htmlContent)
+        /*public static Stock GetStockGeneralInfo(Stock stock, string htmlContent)
         {
             
-        }
+        }*/
 
         public static Dictionary<string, string> GetStocksShortcut(string htmlContent)
         {

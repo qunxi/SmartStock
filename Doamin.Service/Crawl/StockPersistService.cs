@@ -79,7 +79,6 @@ namespace Domain.Service.Crawl
                 DateScope dateSoScope = new DateScope(latestTime, endTime);
                 Stock newStock = this.crawlService.GetStockTransStatusByDate(stock, dateSoScope);
                 this.AddStockDailyHistory(newStock);
-                //this.unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -89,6 +88,26 @@ namespace Domain.Service.Crawl
                 logger.Error(string.Format("the source file {0} at line {1} throw execption: {2}. the stock is {3}",
                     file, line, e.Message, stock.Code + stock.Name));
             }
+        }
+
+        public void UpdateStockShortcutName() 
+        {
+            var shortcutList = this.crawlService.GetStockShortcutList();
+            var stockList = GetStockList();
+            foreach (var stock in stockList) 
+            {
+                if (shortcutList.Keys.Any(k => k == stock.Code))
+                {
+                    stock.ShortcutName = shortcutList[stock.Code];
+                }
+                else 
+                {
+                    logger.Error(string.Format("the stock {0} didn't find shortcut name", stock.Code));
+                }
+
+                this.stockRepository.Update(stock);
+            }
+            this.unitOfWork.Commit();
         }
 
         public IEnumerable<Stock> GetStockList()

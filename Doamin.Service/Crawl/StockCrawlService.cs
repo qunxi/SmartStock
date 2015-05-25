@@ -92,18 +92,20 @@ namespace Domain.Service.Crawl
 
         //later i need add update short cut name function for stock, why not invoke the initial stock function?
         //it takes long time to crawl web, so as an indiviual function to do things.
-        private Dictionary<string, string> GetStockShortcutList()
+        public Dictionary<string, string> GetStockShortcutList()
         {
-            const string baseUrl = @"http://www.yz21.org/stock/info/stocklist_{0}.html";
+            const string baseUrl = @"http://www.yz21.org/stock/info";
 
             Dictionary<string, string> shortCutsList = new Dictionary<string, string>();
 
-            for (int i = 1; i <= 139; i++)
+            const int TotalPage = 139; //current the yz21.org just has 139 pages
+
+            for (int i = 1; i <= TotalPage; i++)
             {
-                string url = i == 1 ? @"http://www.yz21.org/stock/info" : string.Format(baseUrl, i);
+                string url = i == 1 ? baseUrl : string.Format(baseUrl + "/stocklist_{0}.html", i);
                 try
                 {
-                    string htmlContent = this.GetHttpWebRequest(url, Encoding.UTF8);
+                    string htmlContent = this.GetHttpWebRequestNoWebException(url, Encoding.UTF8);
 
                     if(string.IsNullOrEmpty(htmlContent))
                         continue;

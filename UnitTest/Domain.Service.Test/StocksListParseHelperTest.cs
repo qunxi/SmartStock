@@ -10,6 +10,7 @@ namespace Domain.Service.Test
 {
     [TestClass]
     [DeploymentItem("stocksummary.htm")]
+    [DeploymentItem("shortcut.html")]
     public class StocksListParseHelperTest
     {
         private readonly string listContent;
@@ -21,9 +22,12 @@ namespace Domain.Service.Test
             StreamReader listStream = new StreamReader(listhtml, System.Text.Encoding.GetEncoding("GBK"));
             listContent = listStream.ReadToEnd();
 
-            const string stockhtml = "stock.html";
-            StreamReader stockStream = new StreamReader(stockhtml, System.Text.Encoding.GetEncoding("GBK"));
+            const string stockhtml = "shortcut.html";
+            StreamReader stockStream = new StreamReader(stockhtml, System.Text.Encoding.GetEncoding("utf-8"));
             stockContent = stockStream.ReadToEnd();
+            /*const string stockhtml = "stock.html";
+            StreamReader stockStream = new StreamReader(stockhtml, System.Text.Encoding.GetEncoding("GBK"));
+            stockContent = stockStream.ReadToEnd();*/
         }
 
         [TestMethod]
@@ -54,13 +58,29 @@ namespace Domain.Service.Test
         }
 
         [TestMethod]
-        public void Test_GetStockGeneralInfo_KMYY()
+        public void Test_GetStocksShortcut_First2Items() 
         {
-            Stock actualStock = new Stock("康美药业", "600518");
-            actualStock = StocksListParseHelper.GetStockGeneralInfo(actualStock, this.stockContent);
+            var shortcutList = StocksListParseHelper.GetStocksShortcut(stockContent);
+            int i = 0;
 
-            Stock expectStock = new Stock("康美药业", "600518");
-            //expectStock.FloatingCapital = 
+            foreach (var shortcut in shortcutList) 
+            {
+                if (i >= 2)
+                    break;
+                ++i;
+
+                if (shortcut.Key == "000001") 
+                {
+                    Assert.IsTrue(shortcut.Value == "PAYX");
+                }
+               
+
+                if (shortcut.Key.Equals("000002"))
+                {
+                    Assert.IsTrue(shortcut.Value == "WKA");             
+                }
+            }
         }
+        
     }
 }
