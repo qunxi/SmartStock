@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../Content/mobile.css"/>
     <!-- javascript load -->
     <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="../Scripts/kendo.all.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 </head>
 <body>
@@ -34,30 +36,51 @@
     </div>-->
 
     <div id="main">
-        <div class="col-md-4">
-        <div class="widget-container">
-            <div class="widget-title">
-                <span>指数区域</span>
-                <ul class="tab">
-                    <li><a href="#">深成指数</a></li>
-                    <li><a href="#">上证指数</a></li>
-                    <li><a href="#">创业板指数</a></li>
-                </ul>
+        <div class="draggable-area row">
+            <div class="col-md-2">
+                <div class="widget-container">
+                    <div class="widget-title">
+                        <span>指数区域</span>
+                        <ul class="tab">
+                            <li>
+                                <a href="#">深成指数</a>
+                            </li>
+                            <li>
+                                <a href="#">上证指数</a>
+                            </li>
+                            <li>
+                                <a href="#">创业板指数</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="widget-body">
+
+                    </div>
+                </div>
             </div>
-            <div class="widget-body">
-                
+            <div class="col-md-3">
+                <div class="widget-container">
+                    <div class="widget-title">
+                        <span>自选区域</span>
+                        <ul class="tab">
+                            <li>自选1</li>
+                            <li>自选1</li>
+                            <li>自选2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="draggable-area row">
+             <div class="col-md-3">
+                <div class="widget-container">
+                    <div class="widget-title">
+                        <span>咨询区域</span>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="col-md-6">
-            <span>自选区域</span>
-            <ul class="tab-title">
-                <li>自选1</li>
-                <li>自选1</li>
-                <li>自选2</li>
-            </ul>
-        </div>
-        <div class="col-md-6">资讯区域</div>
     </div>
     <div class="left-sidebar">
         <div class="logo">logo</div>
@@ -117,7 +140,13 @@
         <div class="clear"></div>
     </div>-->
 </div>
-
+<script>
+    $(".draggable-area").sortable(
+        {
+            placeholder: "sortable-placeholder"
+        }
+    );
+</script>
 </body>
     
 </html>

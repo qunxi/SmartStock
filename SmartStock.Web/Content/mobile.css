@@ -153,8 +153,14 @@ ul {
     width: 100%;
 }
 
+/*.draggable-area {
+    
+}*/
+
 .widget-container {
     border: 1px solid #e04141;
+    cursor: move;
+    margin: 10px;
 }
 
 .widget-title{
@@ -173,6 +179,11 @@ ul {
 
 .tab li a {
     color: #fff;
+}
+
+.sortable-placeholder {
+    border: 1px dashed #dedede;
+   
 }
 /**:focus {
 	outline: none;
