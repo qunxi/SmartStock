@@ -7,58 +7,18 @@
     <!-- stylesheet load -->
     <link rel="stylesheet" type="text/css" href="../Content/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../Content/mobile.css"/>
+    <!--  <link rel="stylesheet" href="../Content/kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.default.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.dataviz.default.min.css" />-->
     <!-- javascript load -->
     <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/kendo.all.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 <div class="top-nav"></div>
 <div class="content">
-    <!--
-    <div class="top-nav">
-        <ul>
-            <li>
-                <span class="glyphicon glyphicon-th-list"></span>
-                <span class="glyphicon-class">菜单</span>
-            </li>
-            <li></li>
-            <li >
-                <span class="glyphicon glyphicon-search"></span>
-                <span class="glyphicon-class">查询</span>
-            </li>
-            <li class="clear"></li>
-        </ul>
-        <div class="clear"></div>
-    </div>-->
-
-    <div id="main">
-        <div class="col-md-4">
-        <div class="widget-container">
-            <div class="widget-title">
-                <span>指数区域</span>
-                <ul class="tab">
-                    <li><a href="#">深成指数</a></li>
-                    <li><a href="#">上证指数</a></li>
-                    <li><a href="#">创业板指数</a></li>
-                </ul>
-            </div>
-            <div class="widget-body">
-                
-            </div>
-        </div>
-        </div>
-        <div class="col-md-6">
-            <span>自选区域</span>
-            <ul class="tab-title">
-                <li>自选1</li>
-                <li>自选1</li>
-                <li>自选2</li>
-            </ul>
-        </div>
-        <div class="col-md-6">资讯区域</div>
-    </div>
     <div class="left-sidebar">
         <div class="logo">logo</div>
         <ul>
@@ -92,32 +52,66 @@
             </li>
         </ul>
     </div>
-    <div class="clear"></div>
-    <!--
-    <div class="bottom-nav">
-        <ul>
-            <li class="col-sm-3">
-                <span class="glyphicon glyphicon-home"></span>
-                <span class="glyphicon-class">主页</span>
-            </li>
-            <li class="col-sm-3">
-                <span class="glyphicon glyphicon-list-alt"></span>
-                <span class="glyphicon-class">自选</span>
-            </li>
-            <li class="col-sm-3">
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon-class">资讯</span>
-            </li>
-            <li class="col-sm-3">
-                <span class="glyphicon glyphicon-user"></span>
-                <span class="glyphicon-class">账户</span>
-            </li>
+    <div id="main" class="row">
 
-        </ul>
-        <div class="clear"></div>
-    </div>-->
+        <div class="draggable-area col-sm-6 col-xs-12">
+            <div class="widget-container ">
+                <div class="widget-title">
+                    <span>指数区域</span>
+                    <ul class="tab">
+                        <li>
+                            <a href="#">深成指数</a>
+                        </li>
+                        <li>
+                            <a href="#">上证指数</a>
+                        </li>
+                        <li>
+                            <a href="#">创业板指数</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="draggable-area  col-sm-6 col-xs-12">
+            <div class="widget-container">
+                <div class="widget-title">
+                    <span>自选区域</span>
+                    <ul class="tab">
+                        <li>自选1</li>
+                        <li>自选1</li>
+                        <li>自选2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="draggable-area  col-sm-6 col-xs-12">
+            <div class="widget-container">
+                <div class="widget-title">
+                    <span>咨询区域</span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+   
+    <!--<div class="clear"></div>-->
 </div>
 
+<script>
+    $(".draggable-area").kendoSortable(
+        {
+            placeholder: function (element) {
+                return element.clone().addClass("sortable-placeholder");
+            },
+            connectWith: ".draggable-area"
+        }
+    );
+</script>
 </body>
     
 </html>

@@ -27,6 +27,8 @@ a, a:hover{
 
 .clear {
     clear: both;
+    height: 0;
+	line-height: 0;
 }
 
 .clear-left {
@@ -51,10 +53,7 @@ ul {
 }
 
 .left-sidebar {
-    top: 40px;
-    left: 0;
-    /*bottom: 0;*/
-    position: fixed;
+    float: left;
     width: 240px;
     padding: 10px;
     background-color: #fafafa;
@@ -78,12 +77,9 @@ ul {
 
 .left-sidebar ul li a {
     font-size: 16px;
-  
     font-family: hiragino sans gb,microsoft yahei,simsun;
     color: #333;
-   
     display: block;
-    
 }
 
 .left-sidebar ul li a:hover {
@@ -91,8 +87,6 @@ ul {
     font-family: hiragino sans gb,microsoft yahei,simsun;
     color: #ff4500;
     font-style: italic;
-    
-   
 }
 
 .left-sidebar ul li a span {
@@ -107,54 +101,25 @@ ul {
     font-size: 10px;
 }
 
-/*.top-nav {
-    top: 0;
-    position: fixed;
-    background-color: red;
-}
-
-.bottom-nav ul, .top-nav ul {
-    list-style: none;
-    display: block;
-    
-}
-
-.bottom-nav ul li, .top-nav ul li{
-    float: left;
-    font-size: 20px;
-    line-height: 20px;
-    padding: 0 10px;
-    text-align: center;
-    color: #fff;
-}
-
-.glyphicon-class {
-    display: block;
-    text-align: center;
-    word-wrap: break-word;
-    font-size: 10px;
-}
-
-.bottom-nav {
-  
-    bottom: 0;
-    position: fixed;
-    z-index: 1000;
-   
-    background-color: red;
-}*/
-
 /***/
 #main {
-    position: fixed;
-    left: 240px;
-    float: left;
-    height: 100%;
-    width: 100%;
+    float: none;
+    width: auto;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
+.draggable-area {
+    min-height: 40px;
+}
+
 
 .widget-container {
     border: 1px solid #e04141;
+    cursor: move;
+    margin: 10px;
+   
 }
 
 .widget-title{
@@ -174,157 +139,9 @@ ul {
 .tab li a {
     color: #fff;
 }
-/**:focus {
-	outline: none;
-}
 
-*,*:after,*:before {-webkit-box-sizing: border-box;	-moz-box-sizing: border-box;	box-sizing: border-box;	padding: 0;	margin: 0;}
-
-
-::selection {
-	background-color: none;
-	color: #fff;
+.sortable-placeholder {
+    -ms-opacity: 0.4;
+    opacity: 0.4;
+    border: 1px dashed #a6a6a6;
 }
-
-div, a, p, img, blockquote, form, fieldset, textarea, input, label, iframe, code, pre {
-	display: block;
-	overflow:hidden;
-	position:relative;
-}
-
-p {
-	line-height: 20px;
-	margin-bottom: 20px;
-}
-p > a {
-	display: inline;
-	text-decoration: none;
-}
-p > a:hover {
-	text-decoration: underline;
-}
-p > span {
-	display: inline;
-}
-span > a {
-	display: inline;
-}
-a > span {
-	display: inline;
-}
-a {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: none;
-}
-
-h1 {
-	font-size: 22px;
-	line-height: 26px;
-}
-h2 {
-	font-size: 20px;
-	line-height: 24px;
-	padding-bottom: 1px;
-}
-h3 {
-	font-size: 18px;
-	line-height: 22px;
-	padding-top: 1px;
-}
-h4 {
-	font-size: 16px;
-	line-height: 20px;
-	padding-bottom: 1px;
-}
-
-h6{
-	font-size:12px;
-	line-height:18px;
-	padding-bottom:1px;
-}
-
-h5 {
-	font-size: 14px;
-	line-height: 18px;
-}
-
-h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
-	display: inline;
-}
-h1, h2, h3, h4, h5{
-	font-weight:600; 
-	margin-bottom:5px;	
-}
-
-table {
-	border-collapse: separate;
-	border-spacing: 0;
-	background-color: #f6f6f6;
-	border-left: 1px solid #e9e9e9;
-	border-top: 1px solid #e9e9e9;
-	width: 100%;
-	clear: both;
-	margin-bottom: 27px;
-}
-
-th {
-	vertical-align: middle;
-	border-bottom: 1px solid #e9e9e9;
-	border-right: 1px solid #e9e9e9;
-	font-weight: bold;
-	color: #555;
-	background-color: #f6f6f6;
-}
-tr {
-	line-height: 18px;
-}
-td {
-	border-right: 1px solid #e9e9e9;
-	border-bottom: 1px solid #e9e9e9;
-	text-align: center;
-	color: #666;
-	padding-top: 9px;
-	padding-bottom: 9px;
-	line-height: 18px;
-	vertical-align: middle;
-	background-color: #fdfdfd;
-}
-tr:hover > td {
-	background: #fff;
-}
-
-ul {
-	margin-bottom: 20px;
-}
-
-.regular-list{
-	overflow:visible!important;
-	margin-left:0;
-}
-
-.number-list li{
-	overflow:visible!important;
-	margin-left:0;
-	list-style:decimal;
-	margin-left:20px;
-}
-
-ol {
-	margin-bottom: 20px;
-}
-li {
-	line-height: 18px;
-	margin-bottom:5px;
-	list-style:inside;
-}
-
-ol > li:last-child, ul > li:last-child {
-    margin-bottom:0;	
-}
-.clear {
-	clear: both;
-	height: 0;
-	line-height: 0;
-}*/
