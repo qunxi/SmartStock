@@ -7,10 +7,12 @@
     <!-- stylesheet load -->
     <link rel="stylesheet" type="text/css" href="../Content/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../Content/mobile.css"/>
-    <!--  <link rel="stylesheet" href="../Content/kendo/kendo.common.min.css" />
-    <link rel="stylesheet" href="../Content/kendo/kendo.default.min.css" />
-    <link rel="stylesheet" href="../Content/kendo/kendo.dataviz.min.css" />
-    <link rel="stylesheet" href="../Content/kendo/kendo.dataviz.default.min.css" />-->
+    <!--<link rel="stylesheet" href="../Content/kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.common.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.material.min.css" />
+    <link rel="stylesheet" href="../Content/kendo/kendo.dataviz.material.min.css" />
+    <!--<link rel="stylesheet" href="../Content/kendo/kendo.dataviz.default.min.css" />-->
     <!-- javascript load -->
     <script src="../Scripts/jquery-1.10.2.min.js"></script>
     <script src="../Scripts/kendo.all.min.js"></script>
@@ -54,24 +56,49 @@
     </div>
     <div id="main" class="row">
 
-        <div class="draggable-area col-sm-6 col-xs-12">
+        <div class="draggable-area col-sm-4 col-xs-12">
             <div class="widget-container ">
                 <div class="widget-title">
                     <span>指数区域</span>
-                    <ul class="tab">
-                        <li>
-                            <a href="#">深成指数</a>
+                    <ul id="index-tab" class="tab">
+                        <li class="active">
+                            <a href="#sh-index" data-toggle="tab" >上证指数</a>
                         </li>
                         <li>
-                            <a href="#">上证指数</a>
+                            <a data-toggle="tab" href="#sz-index">深成指数</a>
                         </li>
                         <li>
-                            <a href="#">创业板指数</a>
+                            <a href="#cy-index" data-toggle="tab">创业板指数</a>
                         </li>
                     </ul>
                 </div>
                 <div class="widget-body">
-
+                    <div class="tab-content">
+                        <div class="tab-pane" id="sz-index">
+                            <span>深成</span>
+                            <span class="index">14300</span>
+                            <span class="percentage">
+                            <strong class="glyphicon glyphicon-arrow-down"></strong>1.5%</span>
+                            <span class="volume">成交量：4000万</span>
+                            <div class="chart"></div>
+                        </div>
+                        <div class="tab-pane active" id="sh-index">
+                            <span>上证</span>
+                            <span class="index">4900</span>
+                            <span class="percentage">
+                            <strong class="glyphicon glyphicon-arrow-up"></strong>0.5%</span>
+                            <span class="volume">成交量：4000万</span>
+                            <div class="chart"></div>
+                        </div>
+                        <div class="tab-pane" id="cy-index">
+                            <span>创业</span>
+                            <span class="index">4000</span>
+                            <span class="percentage">
+                            <strong class="glyphicon glyphicon-arrow-down"></strong>4.5%</span>
+                            <span class="volume">成交量：4000万</span>
+                            <div class="chart"></div> 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,29 +115,64 @@
             </div>
         </div>
 
-        <div class="draggable-area  col-sm-6 col-xs-12">
+        <div class="draggable-area col-sm-6 col-xs-12">
             <div class="widget-container">
                 <div class="widget-title">
-                    <span>咨询区域</span>
+                    <span>资讯区域</span>
+                    <div class="toolbar">
+                        <a class="flash glyphicon glyphicon-refresh color-green"> <!--data-toggle="tooltip" data-placement="right" title="刷新"--></a>
+                        <a class="glyphicon glyphicon-heart color-yellow"><!--data-toggle="tooltip" data-placement="right" title="收藏"--></a>
+                        <a class="glyphicon glyphicon-fullscreen color-white"></a>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="list-item">
+                        <div class="item-title">book</div>
+                        <div class="item-summary">i like read harry port story</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-title"></div>
+                        <div></div>
+                        <div class="item-summary"></div>
+                    </div>
+                    <!--<table>
+                        <tr><td>1</td></tr>
+                        <tr><td>2</td></tr>
+                        <tr><td>3</td></tr>
+                    </table>-->
                 </div>
             </div>
         </div>
-
-
     </div>
-   
-    <!--<div class="clear"></div>-->
 </div>
 
 <script>
     $(".draggable-area").kendoSortable(
         {
+            connectWith: ".draggable-area",
             placeholder: function (element) {
                 return element.clone().addClass("sortable-placeholder");
             },
-            connectWith: ".draggable-area"
+            hint: function (element){
+                return element.clone()/*.addClass("hint")*/
+                                .height(element.height())
+                                .width(element.width());
+            }
         }
     );
+
+    //$('[data-toggle="tooltip"]').tooltip();
+    /*$(".tab").kendoTabStrip({
+        animation: {
+            open: {
+                effects: "fadeIn"
+            }
+        }
+    });*/
+    /*$("#index-tab a").click(function(e) {
+        e.preventDefault();
+        $(this).tab("show");
+    });*/
 </script>
 </body>
     

@@ -114,23 +114,29 @@ ul {
     min-height: 40px;
 }
 
-
 .widget-container {
     border: 1px solid #e04141;
     cursor: move;
     margin: 10px;
-   
+}
+
+.sortable-placeholder {
+    -ms-opacity: 0.4;
+    opacity: 0.4;
+    border: 1px dashed #a6a6a6;
 }
 
 .widget-title{
     min-height: 38px;
     background-color: #e04141;
+    color: #dedede;
     padding: 10px;
 }
 
-.tab {
+.tab{
     float: right;
 }
+
 .tab li {
     padding: 0 5px;
     float: left;
@@ -140,8 +146,48 @@ ul {
     color: #fff;
 }
 
-.sortable-placeholder {
-    -ms-opacity: 0.4;
-    opacity: 0.4;
-    border: 1px dashed #a6a6a6;
+.tab-pane span {
+    padding: 10px 25px 10px 10px;
+}
+
+.widget-title .toolbar {
+    float: right;
+}
+
+.widget-title .toolbar  a{
+    font-size: 14px;
+    /*color: #fff;*/
+    padding: 0 3px;
+    cursor: pointer;
+    display: block;
+    float: left;
+}
+
+.widget-title .toolbar a:hover {
+    font-size: 16px;
+    /*color: #eaae00;*/
+    padding: 0 3px;
+    cursor: pointer;
+    display: block;
+}
+
+/*color theme*/
+.color-green {
+    color: #080;
+}
+
+.color-red {
+    color: #f00;
+}
+
+.color-yellow {
+    color: #ee0;
+}
+
+.color-blue {
+    color: #0bf;
+}
+
+.color-white {
+    color: #fff;
 }
